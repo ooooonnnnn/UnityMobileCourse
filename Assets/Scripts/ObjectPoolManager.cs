@@ -30,21 +30,35 @@ public class ObjectPoolManager : MonoBehaviour
             int poolSize = settings.poolSize;
             GameObject prefab = settings.prefab;
 
-            Queue<GameObject> newPool = new Queue<GameObject>();
-            AddItemsToPool(poolSize, prefab, newPool);
-            
-            pools.Add(name,newPool);
+            CreateNewPool(name, poolSize, prefab);
         }
     }
 
-    private void AddItemsToPool(int numItems, GameObject prefab, Queue<GameObject> pool)
+    public void CreateNewPool(string name, int poolSize, GameObject prefab)
+    {
+        Queue<GameObject> newPool = new Queue<GameObject>();
+        pools.Add(name,newPool);
+        
+        AddItemsToPool(poolSize, prefab, name);
+    }
+
+
+    private void AddItemsToPool(int numItems, GameObject prefab, string poolName)
     {
         for (int i = 0; i < numItems; i++)
         {
             GameObject newobj = Instantiate(prefab);
             newobj.SetActive(false);
-            pool.Enqueue(newobj);
+            ObjectPoolInterface @interface = newobj.GetComponent<ObjectPoolInterface>();
+            @interface.poolName = poolName;
+            @interface.objectPoolManager = this;
+            pools[poolName].Enqueue(newobj);
         }
+    }
+
+    public string[] GetPoolNames()
+    {
+        return pools.Keys.ToArray();
     }
 
     public void InsertToPool(string poolName, GameObject obj)
@@ -66,11 +80,11 @@ public class ObjectPoolManager : MonoBehaviour
         
         if (pool.Count <= 0)
         {
-            Debug.LogWarning($"Pool {poolName} has ran out of items. Creating more...");
+            Debug.LogWarning($"Pool \"{poolName}\" has ran out of items. Creating more...");
             PoolSettings smallPoolSettings = poolSettings.First(setting => setting.poolName == poolName);
             if (smallPoolSettings.poolSize <= 0) smallPoolSettings.poolSize = 1;
             int currentPoolSize = smallPoolSettings.poolSize;
-            AddItemsToPool(currentPoolSize, smallPoolSettings.prefab, pool);
+            AddItemsToPool(currentPoolSize, smallPoolSettings.prefab, poolName);
             smallPoolSettings.poolSize *= 2;
         }
         
@@ -83,7 +97,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         if (!pools.ContainsKey(poolName))
         {
-            throw new Exception($"There is no pool named {poolName}");
+            throw new Exception($"There is no pool named \"{poolName}\"");
         }
     }
 }
