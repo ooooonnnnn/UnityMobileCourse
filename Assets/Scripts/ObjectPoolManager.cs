@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class ObjectPoolManager : MonoBehaviour
 {
-    private Queue<GameObject> pool = new Queue<GameObject>();
-    [SerializeField] private int poolSize = 10;
+    private Dictionary<string,Queue<GameObject>> pools = new();
+    private Dictionary<string,int> poolSizes;
     [SerializeField] private GameObject prefab;
     
     private void InitializePool()
