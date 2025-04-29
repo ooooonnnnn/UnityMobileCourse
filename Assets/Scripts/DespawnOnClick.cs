@@ -5,6 +5,6 @@ public class DespawnOnClick : ObjectPoolInterface
 {
     private void OnMouseDown()
     {
-        objectPoolManager.InsertToPool(poolName, this.gameObject);
+        ReturnToPool();
     }
 }
