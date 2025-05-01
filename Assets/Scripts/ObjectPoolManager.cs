@@ -47,7 +47,7 @@ public class ObjectPoolManager : MonoBehaviour
     {
         for (int i = 0; i < numItems; i++)
         {
-            GameObject newobj = Instantiate(prefab);
+            GameObject newobj = Instantiate(prefab, parent: transform);
             newobj.SetActive(false);
             pools[poolName].Enqueue(newobj);
             
@@ -91,6 +91,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
         
         GameObject newobj = pool.Dequeue();
+        newobj.transform.parent = null;
         newobj.SetActive(true);
         return newobj;
     }
