@@ -49,10 +49,12 @@ public class ObjectPoolManager : MonoBehaviour
         {
             GameObject newobj = Instantiate(prefab);
             newobj.SetActive(false);
-            ObjectPoolInterface @interface = newobj.GetComponent<ObjectPoolInterface>();
+            pools[poolName].Enqueue(newobj);
+            
+            ObjectPoolInterface? @interface = newobj.GetComponent<ObjectPoolInterface>();
+            if (@interface == null) continue;
             @interface.poolName = poolName;
             @interface.objectPoolManager = this;
-            pools[poolName].Enqueue(newobj);
         }
     }
 
