@@ -56,8 +56,8 @@ public class GridManager : ObjectPoolInterface
     {
         GameObject newPoint = objectPoolManager.GetFromPool(poolName);
         Transform newTransform = newPoint.transform;
-        newTransform.position = position + rowNum * rowDist * Vector3.up;
+        points.Enqueue(newTransform);
         newTransform.parent = transform;
-        points.Enqueue(transform);
+        newTransform.localPosition = position + rowNum * rowDist * Vector3.up;
     }
 }
