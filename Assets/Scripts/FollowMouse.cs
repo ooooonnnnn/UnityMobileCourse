@@ -9,7 +9,6 @@ public class FollowMouse : MonoBehaviour
     {
         if (isFollowing)
         {
-            print(3);
             Vector3 mousepos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousepos.z = 0f;
             transform.position = mousepos;
@@ -23,7 +22,6 @@ public class FollowMouse : MonoBehaviour
 
     private void OnMouseDown()
     {
-        print(1);
         if (!isFollowing)
         {
             StartFollowing();
@@ -34,7 +32,6 @@ public class FollowMouse : MonoBehaviour
     {
         isFollowing = true;
         transform.parent = null;
-        print(2);
     }
 
     public void StopFollowing()
