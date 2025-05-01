@@ -59,4 +59,27 @@ public class GridManager : ObjectPoolInterface
         newTransform.parent = transform;
         newTransform.localPosition = position + rowNum * rowDist * Vector3.up;
     }
+
+    public Transform GetClosestPoint(Vector2 position)
+    {
+        Transform[] pointsArr = points.ToArray();
+        float minValue = float.MaxValue;
+        int minIndex = -1;
+        for (int i = 0; i < points.Count; i++)
+        {
+            float dist = Vector3.Distance(pointsArr[i].position, position);
+            if (dist < minValue)
+            {
+                minValue = dist;
+                minIndex = i;
+            }
+        }
+
+        if (minIndex == -1)
+        {
+            throw new Exception("Couldn't find closest point");
+        }
+
+        return pointsArr[minIndex];
+    }
 }

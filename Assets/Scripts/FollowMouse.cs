@@ -4,6 +4,7 @@ using UnityEngine;
 public class FollowMouse : MonoBehaviour
 {
     public bool isFollowing { get; private set; }
+    [SerializeField] public GridManager grid;
 
     private void Update()
     {
@@ -36,6 +37,10 @@ public class FollowMouse : MonoBehaviour
 
     public void StopFollowing()
     {
+        //find the closest point on the frid and go to it
         isFollowing = false;
+        Transform landingPoint = grid.GetClosestPoint(transform.position);
+        transform.parent = landingPoint;
+        transform.localPosition = Vector3.zero;
     }
 }
