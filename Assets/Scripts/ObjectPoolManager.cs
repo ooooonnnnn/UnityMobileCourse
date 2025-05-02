@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-
 public class ObjectPoolManager : MonoBehaviour
 {
     //to define the number, names, sizes, and prefabs of the pools
@@ -16,7 +15,6 @@ public class ObjectPoolManager : MonoBehaviour
         public int poolSize;
         public GameObject prefab;
     }
-
     private void Awake()
     {
         InitializePools();
