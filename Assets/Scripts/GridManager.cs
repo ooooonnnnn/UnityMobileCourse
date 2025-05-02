@@ -16,7 +16,7 @@ public class GridManager : ObjectPoolInterface
 
     private void Start()
     {
-        rowDist = gridLength * (float)math.sqrt(3f) / 2; //for triangular grid
+        rowDist = gridLength * (float)Math.Sqrt(3f) / 2; //for triangular grid
         SpawnRow();
         SpawnRow();
         SpawnRow();
